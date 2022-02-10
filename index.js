@@ -8,6 +8,7 @@ app.get('/', (req, res) => {
   res.send(`
     <img src="https://i.pinimg.com/originals/60/98/c2/6098c221cb9dba63fcd3d201c83ca2f3.jpg" alt="cat meme">
     <h1>Hello World</h1>
+    <p>Rodando na porta ${PORT}</p>
   `);
 });
 
