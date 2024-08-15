@@ -1,0 +1,32 @@
+name: Adicionar comentário quando PR for aprovado
+on:
+  # pull_request_review:
+  #   types: [submitted]
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ler comentário do arquivo Markdown
+        id: comment
+        run: |
+          echo "::set-output name=body::$(cat .github/workflows/comment.md)"
+
+      - name: Adicionar comentário
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueComment = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `${{ steps.comment.outputs.body }}`
+            };
+            github.rest.issues.createComment(issueComment);
