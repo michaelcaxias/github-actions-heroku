@@ -1,10 +1,10 @@
 on:
-  pull_request:
-    branches:
-      - "**"
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   comment:
+    if: ${{ github.event.review.state == 'approved' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
