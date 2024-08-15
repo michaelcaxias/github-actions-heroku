@@ -1,5 +1,4 @@
 on:
-  # Trigger the workflow on push or pull request
   pull_request:
     branches:
       - "**"
@@ -14,15 +13,16 @@ jobs:
       - name: Read comment file
         id: comment
         run: |
-          echo "::set-output name=body::$(cat .github/workflows/comment.md)"
+          echo "::set-output name=body::$(cat comment.md | jq -R -s .)"
 
       - name: Create comment
         uses: actions/github-script@v6
         with:
           script: |
+            const body = JSON.parse('${{ steps.comment.outputs.body }}');
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ${{ steps.comment.outputs.body }}
+              body: body
             })

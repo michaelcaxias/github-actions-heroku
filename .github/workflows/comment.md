@@ -1,4 +1,4 @@
-Thank you for your contribution! Your PR has been approved and will be merged soon.
+Thank you for your contribution! Your PR has been approved and will be merged soon. :rocket:
 
 Please note the following merge guidelines for our repository:
 
