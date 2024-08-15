@@ -4,8 +4,7 @@ on:
   #   types: [submitted]
   push:
     branches:
-      - main
-      - master
+      - "**"
 
 jobs:
   comment:
