@@ -13,7 +13,8 @@ jobs:
       - name: Read comment file
         id: comment
         run: |
-          echo "::set-output name=body::$(cat .github/workflows/comment.md)"
+          comment=$(cat .github/workflows/comment.md | sed ':a;N;$!ba;s/\n/\\n/g')
+          echo "::set-output name=body::$comment"
 
       - name: Create comment
         uses: actions/github-script@v6
