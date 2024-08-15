@@ -13,7 +13,7 @@ jobs:
       - name: Read comment file
         id: comment
         run: |
-          echo "::set-output name=body::$(cat .github/workflows/comment.md)"
+          echo "::set-output name=body::$(cat .github/workflows/comment.md | xangs echo)"
 
       - name: Create comment
         uses: actions/github-script@v6
