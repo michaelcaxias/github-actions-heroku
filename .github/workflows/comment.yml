@@ -19,7 +19,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const body = JSON.parse(steps.comment.outputs.body);
+            const body = JSON.parse(${{ steps.comment.outputs.body }});
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
