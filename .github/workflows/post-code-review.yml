@@ -1,0 +1,30 @@
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  comment:
+    if: ${{ github.event.review.state == 'approved' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Read comment file
+        id: comment
+        run: |
+          comment=$(cat .github/workflows/comment.md | sed ':a;N;$!ba;s/\n/\\n/g')
+          echo "::set-output name=body::$comment"
+
+      - name: Create comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const body = '${{ steps.comment.outputs.body }}'
+            console.log(context)
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            })
